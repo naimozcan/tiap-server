@@ -20,10 +20,6 @@ const exceptionSchema = new Schema(
             ref: "Order",
             required: true
         },
-        createdAt: {
-            type: Date,
-            default: Date.now
-        },
         sku: {
             type: Schema.Types.ObjectId,
             ref: "SKU",
@@ -42,6 +38,11 @@ const exceptionSchema = new Schema(
             type: String,
             required: true,
             enum: TASK_TYPES
+        },
+        taskCollection: {
+            type: Schema.Types.ObjectId,
+            ref: "TaskCollection",
+            required: true
         },
         task: {
             type: Schema.Types.ObjectId,
@@ -99,14 +100,20 @@ const exceptionSchema = new Schema(
             type: String,
             required: true,
             enum: EXCEPTION_STATUS
-        }        
-
+        },
+        image: {
+            type: String,
+            unique: true
+        },
+        notes: {
+            type: String,
+        }
     },
     {
         timestamps: true
     }
 )
 
-const Exception = model("Employee", employeeSchema)
+const Exception = model("Employee", exceptionSchema)
 
 module.exports = Exception
