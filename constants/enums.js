@@ -4,6 +4,7 @@ const enums = {
     EMPLOYEE_ROLES : ["user", "admin", "superAdmin"],
     EMAIL_REGEX: [/^[a-z]+\.[a-z]+[0-9]{2}@[a-z]+\.com$/, "Email should be in this format: jane.smith01@company.com"],
     DEPARTMENTS : ["outbound"],
+    PASSWORD_REGEX : /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!.,:;?'"(){}\[\]\\\/\-_=+*@#$%^&~`|<>])(?!.*\s).{8,}$/,
 
     RECEIEVED_AS : ["costumer complaint", "operation error"],
     EXCEPTION_STATUS : ["handled", "irrecoverable", "replaced", "backlog"],

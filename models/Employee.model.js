@@ -27,7 +27,7 @@ const employeeSchema = new Schema(
             type: String,
             required: true,
             lowercase: true,
-            match: [EMAIL_REGEX]
+            match: EMAIL_REGEX
         },
         password: {
             type: String,
