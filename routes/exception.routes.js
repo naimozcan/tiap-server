@@ -17,11 +17,19 @@ router.get("/", verifyToken, async (req, res, next) => {
 router.post("/", verifyToken, verifyAdmin, async (req, res, next) => {
     try {
         const exceptionLogNo = await generateLogNumber("exception")
-
         const newException = {...req.body, no: exceptionLogNo}
-
         await Exception.create(newException)
         res.status(201).json({message: "New exception log created successfully."})
+    } catch (error) {
+        next(error)
+    }
+})
+
+// *** Update an Exception ***
+router.put("/:_id", verifyToken, verifyAdmin, async (req, res, next) => {
+    try {
+        const updatedExceptionLog = await Exception.findByIdAndUpdate(req.params._id, {...req.body})
+        res.status(200).json(updatedExceptionLog)
     } catch (error) {
         next(error)
     }
@@ -37,12 +45,11 @@ router.get("/:_id", verifyToken, async (req, res, next) => {
     }
 })
 
-
 // *** Delete Exception ***
 router.delete("/:_id", verifyToken, verifyAdmin, async (req, res, next) => {
     try {
-        const exception = await Exception.delete(req.params._id)
-        res.status(200).json(exception)
+        await Exception.findByIdAndDelete(req.params._id)
+        res.status(200).json({message: "Exception deleted successfuly"})
     } catch (error) {
         next(error)
     }
