@@ -95,7 +95,7 @@ router.post("/login", async (req, res, next) => {
         const payload = {
             role: employee.role,
             email: employee.email,
-            id: employee.id
+            _id: employee.id
         }
 
         console.log("Payload used to create token: ", payload)

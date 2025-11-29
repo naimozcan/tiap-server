@@ -11,9 +11,9 @@ router.get("/", verifyToken, (req, res, next) => {
 const authRouter = require("./auth.routes")
 router.use("/auth", authRouter)
 
-// // *** CRUD Routes (Main Dynamic Data) ***
-// const exceptionRouter = require("./exception.routes")
-// router.use("/exceptions", exceptionRouter)
+// *** CRUD Routes (Main Dynamic Data) ***
+const exceptionRouter = require("./exception.routes")
+router.use("/exceptions", exceptionRouter)
 
 // const rootCauseRouter = require("./root-cause.routes")
 // router.use("/root-causes", rootCauseRouter)

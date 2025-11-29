@@ -20,8 +20,9 @@ const enums = {
 
     TASK_TYPES : ["picking", "packing"],
     ZONES : ["AR"],
-    SKU_REGEX : /^\d{6}$/
+    SKU_REGEX : /^\d{6}$/,
 
+    LOG_TYPE_ENUM: ["order", "exception", "task", "taskCollection"]
 }
 
 module.exports = enums
