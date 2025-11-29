@@ -18,15 +18,28 @@ function verifyToken(req, res, next) {
 
 // *** Verify Admin
 function verifyAdmin(req, res, next) {
-
+    
     console.log(req.payload.role)
-
+    
     if(req.payload.role !== "admin" && req.payload.role !== "superAdmin" ){
-        res.status(401).json({errorMessage: "You are not authorized."})
+        res.status(401).json({errorMessage: "!!! You are not authorized. If you think there is an error, please talk with the executive personnel."})
         return
     } else {
         next()
     }
 }
 
-module.exports = { verifyToken, verifyAdmin }
+// *** Verify Super Admin
+function verifySuperAdmin(req, res, next) {
+
+    console.log(req.payload.role)
+
+    if(req.payload.role !== "superAdmin" ){
+        res.status(401).json({errorMessage: "!!! You are not authorized. If you think there is an error, please talk with the executive personnel."})
+        return
+    } else {
+        next()
+    }
+}
+
+module.exports = { verifyToken, verifyAdmin, verifySuperAdmin }

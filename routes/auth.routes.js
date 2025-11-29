@@ -1,8 +1,8 @@
 const router = require("express").Router()
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
-const { verifyToken, verifyAdmin } = require("../middlewares/auth.middlewares.js")
-const { PASSWORD_REGEX } = require("../constants/enums.js")
+const { verifyToken, verifyAdmin, verifySuperAdmin } = require("../middlewares/auth.middlewares.js")
+const { PASSWORD_REGEX, EMAIL_REGEX } = require("../constants/enums.js")
 const Employee = require("../models/Employee.model")
 
 // *** Test ***
@@ -23,14 +23,20 @@ router.post("/signup", async (req, res, next) => {
         res.status(400).json({ errorMessage: "Please fill all mandatory fields." })
         return
     }
+    if (!EMAIL_REGEX.test(email)) {
+        res.status(400).json({ errorMessage: `Email should be in this format: "name.surname01@company.com".` })
+        console.warn(`User attempt to sign up with invalid email format: ${email}`)
+        return
+    }
     if (!PASSWORD_REGEX.test(password)) {
         res.status(400).json({ errorMessage: "Password is not strong enough, choose a stronger one." })
+        console.warn(`User attempt to sign up with weak password: ${password}`)
         return
     }
 
     try {
         const foundUser = await Employee.findOne({ email: email })
-        console.log("found user: ", foundUser)
+        console.log("SIGN-UP STEP ANY EXISTING USER CHECK... Found user: ", foundUser)
 
         if (foundUser) {
             console.log("Client tried to create a new user/employee with the existing email address!")
@@ -47,7 +53,7 @@ router.post("/signup", async (req, res, next) => {
         await Employee.create(newEmployee)
 
         console.log("New user signed up!: ", newEmployee.name)
-        res.status(201).json({ errorMessage: "New user signed up!: " })
+        res.status(201).json({ errorMessage: `New user signed up!: ${newEmployee.email} ` })
 
     } catch (error) {
         next(error)
@@ -103,11 +109,22 @@ router.post("/login", async (req, res, next) => {
     }
 })
 
-// *** Verification Test ***
+// *** Login Verification Test ***
 router.get("/verify", verifyToken, (req, res) => {
-    res.status(200).send("User authorized.")
+    res.status(200).send(`Access accepted. | User: ${req.payload.email}`)
+    console.log(`Access accepted. | User: ${req.payload.email}`)
 })
 
+// *** Admin Verification Test ***
+router.get("/verify/admin", verifyToken, verifyAdmin, (req, res) => {
+    res.status(200).send(`Access accepted. | Admin: ${req.payload.email}`)
+    console.log(`Access accepted. | Admin: ${req.payload.email}`)
+})
 
+// *** Super Admin Verification Test ***
+router.get("/verify/superAdmin", verifyToken, verifySuperAdmin, (req, res) => {
+    res.status(200).send(`Access accepted. | Super Admin: ${req.payload.email}`)
+    console.log(`Access accepted. | Admin: ${req.payload.email}`)
+})
 
 module.exports = router

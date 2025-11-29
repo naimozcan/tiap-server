@@ -1,8 +1,8 @@
 const router = require("express").Router()
 const { verifyAdmin, verifyToken } = require("../middlewares/auth.middlewares")
 
-router.get("/", verifyToken, verifyAdmin,  (req, res, next) => {
-    res.send("test")
+router.get("/", verifyToken, (req, res, next) => {
+    res.status(200).json({message: "Test OK."})
     console.log("received")
 })
 
