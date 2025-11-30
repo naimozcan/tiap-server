@@ -6,7 +6,6 @@ router.get("/", verifyToken, (req, res, next) => {
     console.log("received")
 })
 
-
 // *** Authorization ***
 const authRouter = require("./auth.routes")
 router.use("/auth", authRouter)
@@ -37,5 +36,7 @@ router.use("/task-collections", taskCollectionRouter)
 const ordersRouter = require("./order.routes")
 router.use("/orders", ordersRouter)
 
+const uploadsRouter = require("./upload.routes")
+router.use("/uploads", uploadsRouter)
 
 module.exports = router
