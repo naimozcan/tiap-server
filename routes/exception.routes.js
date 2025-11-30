@@ -17,9 +17,9 @@ router.get("/", verifyToken, async (req, res, next) => {
 router.post("/", verifyToken, verifyAdmin, async (req, res, next) => {
     try {
         const exceptionLogNo = await generateLogNumber("exception")
-        const newException = {...req.body, no: exceptionLogNo}
+        const newException = { ...req.body, no: exceptionLogNo }
         await Exception.create(newException)
-        res.status(201).json({message: "New exception log created successfully."})
+        res.status(201).json({ message: "New exception log created successfully." })
     } catch (error) {
         next(error)
     }
@@ -28,7 +28,7 @@ router.post("/", verifyToken, verifyAdmin, async (req, res, next) => {
 // *** Update an Exception ***
 router.put("/:_id", verifyToken, verifyAdmin, async (req, res, next) => {
     try {
-        const updatedExceptionLog = await Exception.findByIdAndUpdate(req.params._id, {...req.body}, { new: true })
+        const updatedExceptionLog = await Exception.findByIdAndUpdate(req.params._id, { ...req.body }, { new: true })
         res.status(200).json(updatedExceptionLog)
     } catch (error) {
         next(error)
@@ -39,7 +39,7 @@ router.put("/:_id", verifyToken, verifyAdmin, async (req, res, next) => {
 router.get("/:_id", verifyToken, async (req, res, next) => {
     try {
         const exception = await Exception.findById(req.params._id)
-        .populate('order')
+            .populate('order')
             .populate('sku')
             .populate('taskCollection')
             .populate('task')
@@ -60,7 +60,7 @@ router.get("/:_id", verifyToken, async (req, res, next) => {
 router.delete("/:_id", verifyToken, verifyAdmin, async (req, res, next) => {
     try {
         await Exception.findByIdAndDelete(req.params._id)
-        res.status(200).json({message: "Exception deleted successfuly"})
+        res.status(200).json({ message: "Exception deleted successfuly" })
     } catch (error) {
         next(error)
     }
