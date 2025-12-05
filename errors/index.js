@@ -25,6 +25,8 @@ function handleErrors(app) {
             errorMessage = "Forbidden - You don't have permission."
         } else if (statusCode === 404) {
             errorMessage = "Not Found"
+        } else if (statusCode === 405) {
+            errorMessage = "Method error!"
         } else {
             errorMessage = error.message || "Internal server error. Check the server console for details."
         }
