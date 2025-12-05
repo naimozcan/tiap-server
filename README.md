@@ -542,9 +542,6 @@ npm run dev
 # Start production server
 npm start
 
-# Seed database with mock data
-npm run seed
-
 # Run tests
 npm test
 ```
