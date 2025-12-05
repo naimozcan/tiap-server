@@ -7,6 +7,8 @@ router.get("/", verifyToken, async (req, res, next) => {
     try {
         const rootCauses = await RootCause.find(req.query)
         res.status(200).json(rootCauses)
+        console.log("***ROOT CAUSE GET REQUEST***", req.query)
+        console.log("***ROOT CAUSE GET RESPONSE***", rootCauses)
     } catch (error) {
         next(error)
     }
@@ -27,7 +29,7 @@ router.post("/", verifyToken, verifyAdmin, async (req, res, next) => {
 router.put("/:_id", verifyToken, verifyAdmin, async (req, res, next) => {
     try {
         const updatedRootCause = await RootCause.findByIdAndUpdate(req.params._id, {...req.body}, { new: true })
-        res.status(200).json(updatedRootCause)
+        res.status(200).json({message: "Root cause updated successfully."})
     } catch (error) {
         next(error)
     }

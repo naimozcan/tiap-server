@@ -14,6 +14,8 @@ router.post("/", verifyToken, upload.single("image"), async (req, res, next) => 
         const cloudinaryUpload = await cloudinary.uploader.upload(req.file.path, {folder: "tiap-app"})
 
         const url = cloudinaryUpload.secure_url 
+        console.log("*** IMAGE UPLOAD REQUEST ***", req.file)
+        console.log("*** IMAGE UPLOAD RESPONSE ***", url)
         res.status(200).json({url: url})
 
     } catch (error) {

@@ -6,6 +6,7 @@ const Order = require("../models/Order.model")
 router.get("/", verifyToken, async (req, res, next) => {
     try {
         const orders = await Order.find(req.query)
+        console.log(orders)
         res.status(200).json(orders)
     } catch (error) {
         next(error)

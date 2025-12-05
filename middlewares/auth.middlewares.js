@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken")
 
-// *** Verify Logged In User
+// *** Verify Log In
 function verifyToken(req, res, next) {
 
     console.log(req.headers)
@@ -22,7 +22,7 @@ function verifyAdmin(req, res, next) {
     console.log(req.payload.role)
     
     if(req.payload.role !== "admin" && req.payload.role !== "superAdmin" ){
-        res.status(401).json({errorMessage: "!!! You are not authorized. If you think there is an error, please talk with the executive personnel."})
+        res.status(401).json({errorMessage: "!!! You are not authorized. If you think there is an error, please talk with the executive personnel." , status: 401})
         return
     } else {
         next()
@@ -35,7 +35,7 @@ function verifySuperAdmin(req, res, next) {
     console.log(req.payload.role)
 
     if(req.payload.role !== "superAdmin" ){
-        res.status(401).json({errorMessage: "!!! You are not authorized. If you think there is an error, please talk with the executive personnel."})
+        res.status(401).json({errorMessage: "!!! You are not authorized. If you think there is an error, please talk with the executive personnel.", status: 401})
         return
     } else {
         next()

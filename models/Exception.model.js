@@ -69,11 +69,11 @@ const exceptionSchema = new Schema(
             enum: DEPARTMENTS
         },
         replacedFrom: {
-            type: Schema.Types.ObjectId,
+            type: String,
             ref: "Location"
         },
         exceptionLocation: {
-            type: Schema.Types.ObjectId,
+            type: String,
             ref: "Location"
         },
         skuPrice: {
@@ -85,16 +85,13 @@ const exceptionSchema = new Schema(
             required: true
         },
         foundBy: {
-            type: Schema.Types.ObjectId,
-            ref: "Employee"
+            type: String
         },
         errorBy: {
-            type: Schema.Types.ObjectId,
-            ref: "Employee"
+            type: String
         },
         handledBy: {
-            type: Schema.Types.ObjectId,
-            ref: "Employee"
+            type: String
         },
         status:{
             type: String,

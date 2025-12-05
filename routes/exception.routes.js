@@ -1,13 +1,43 @@
 const router = require("express").Router()
+const mongoose = require("mongoose")
 const { verifyToken, verifyAdmin } = require("../middlewares/auth.middlewares")
 const { generateLogNumber } = require("../middlewares/util.middlewares")
 const Exception = require("../models/Exception.model")
 
+
 // *** Get All Exceptions (Also by Search Params) ***
 router.get("/", verifyToken, async (req, res, next) => {
     try {
-        const exceptions = await Exception.find(req.query)
+
+        const query = {...req.query}
+
+        if (req.query.createdAt) {
+            query.createdAt = {
+                $gte: new Date(req.query.createdAt).setHours(0, 0, 0, 0),
+                $lt: new Date(req.query.createdAt).setHours(23, 59, 59, 999)
+            }
+        }
+
+         if (req.query.rootcause) {
+            query.rootcause = new mongoose.Types.ObjectId(req.query.rootcause)
+        }
+
+        const exceptions = await Exception.find(query)
+            .populate('order')
+            .populate('sku')
+            .populate('taskCollection')
+            .populate({
+                path: "task",
+                populate: {
+                    path: "location",
+                    ref: "Location"
+                }
+            })
+            .populate('location')
+            .populate('rootcause')
         res.status(200).json(exceptions)
+        console.log("***EXCEPTIONS GET REQUEST***", query)
+        console.log("***EXCEPTIONS GET RESPONSE***", exceptions)
     } catch (error) {
         next(error)
     }
@@ -29,7 +59,7 @@ router.post("/", verifyToken, verifyAdmin, async (req, res, next) => {
 router.put("/:_id", verifyToken, verifyAdmin, async (req, res, next) => {
     try {
         const updatedExceptionLog = await Exception.findByIdAndUpdate(req.params._id, { ...req.body }, { new: true })
-        res.status(200).json(updatedExceptionLog)
+        res.status(200).json({updatedExceptionLog, message: "Exception log updated successfully."})
     } catch (error) {
         next(error)
     }
@@ -45,11 +75,6 @@ router.get("/:_id", verifyToken, async (req, res, next) => {
             .populate('task')
             .populate('location')
             .populate('rootcause')
-            .populate('replacedFrom')
-            .populate('exceptionLocation')
-            .populate('foundBy')
-            .populate('errorBy')
-            .populate('handledBy')
         res.status(200).json(exception)
     } catch (error) {
         next(error)

@@ -53,7 +53,7 @@ router.post("/signup", async (req, res, next) => {
         await Employee.create(newEmployee)
 
         console.log("New user signed up!: ", newEmployee.name)
-        res.status(201).json({ errorMessage: `New user signed up!: ${newEmployee.email} ` })
+        res.status(201).json({ message: `New user signed up!: ${newEmployee.email} ` })
 
     } catch (error) {
         next(error)
@@ -111,20 +111,20 @@ router.post("/login", async (req, res, next) => {
 
 // *** Login Verification ***
 router.get("/verify", verifyToken, (req, res) => {
-    res.status(200).send(`Access accepted. | User: ${req.payload.email}`)
+    res.status(200).json(req.payload)
     console.log(`Access accepted. | User: ${req.payload.email}`)
 })
 
-// *** Admin Verification ***
-router.get("/verify/admin", verifyToken, verifyAdmin, (req, res) => {
-    res.status(200).send(`Access accepted. | Admin: ${req.payload.email}`)
-    console.log(`Access accepted. | Admin: ${req.payload.email}`)
-})
+// // *** Admin Verification ***
+// router.get("/verify/admin", verifyToken, verifyAdmin, (req, res) => {
+//     res.status(200).send(`Access accepted. | Admin: ${req.payload.email}`)
+//     console.log(`Access accepted. | Admin: ${req.payload.email}`)
+// })
 
-// *** Super Admin Verification ***
-router.get("/verify/superAdmin", verifyToken, verifySuperAdmin, (req, res) => {
-    res.status(200).send(`Access accepted. | Super Admin: ${req.payload.email}`)
-    console.log(`Access accepted. | Admin: ${req.payload.email}`)
-})
+// // *** Super Admin Verification ***
+// router.get("/verify/superAdmin", verifyToken, verifySuperAdmin, (req, res) => {
+//     res.status(200).send(`Access accepted. | Super Admin: ${req.payload.email}`)
+//     console.log(`Access accepted. | Admin: ${req.payload.email}`)
+// })
 
 module.exports = router

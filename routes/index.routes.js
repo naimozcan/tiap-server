@@ -36,7 +36,7 @@ router.use("/task-collections", taskCollectionRouter)
 const ordersRouter = require("./order.routes")
 router.use("/orders", ordersRouter)
 
-// const uploadsRouter = require("./upload.routes")
-// router.use("/uploads", uploadsRouter)
+const uploadsRouter = require("./upload.routes")
+router.use("/uploads", uploadsRouter)
 
 module.exports = router
