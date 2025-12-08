@@ -24,7 +24,9 @@ TIAP Server is a backend API designed for managing warehouse operations with a s
 - JWT  
 - bcryptjs  
 - CORS  
-- Morgan  
+
+### **Logging**
+- Morgan
 
 ### **File Handling**
 - Multer  
