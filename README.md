@@ -96,8 +96,8 @@ TIAP Server is a backend API designed for managing warehouse operations with a s
 ## **Links**
 
 ### **Project**
-- **Client Repository:** https://github.com/naimyasirozcan/tiap-app  
-- **Server Repository:** https://github.com/naimyasirozcan/tiap-server  
+- **Client Repository:** https://github.com/naimozcan/tiap-app  
+- **Server Repository:** https://github.com/naimozcan/tiap-server  
 
 ### **Slides**
 https://drive.google.com/file/d/17XfbTA0k-XnWR5mMsHag2n2y_nyqXMkR/view?usp=sharing
